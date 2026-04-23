@@ -368,6 +368,79 @@ curl -A "Mozilla/5.0" -L "<hero-image-url>" -o assets/<brand>-brand/product-hero
 
 完整清单见 `references/content-guidelines.md`。
 
+---
+
+## 快速参考：零 context 时的色 × 字起点（fallback 表）
+
+> **优先级说明**：有品牌 spec / 核心资产协议跑通的 → **完全忽略此节**，按 spec 走。此节仅用于「用户没品牌、没 reference、也没法进设计方向顾问」的兜底——比 Inter + `#3b82f6` 这种 AI 默认组合好很多的起点。
+> 来源：吸收自 web-design-skill（ConardLi, MIT License）的 oklch 色系 + 字体配对研究，保留 hifi-claude-design 品牌资产协议优先的原则。
+
+### 禁用字体清单（硬规则）
+
+以下字体用了就等同承认「这是 AI 默认产出」——除非品牌 spec 明写用这些（如 Stripe 经微调的 Inter 变体），否则一律不用：
+
+- ❌ **Inter**（过度被用作"技术感默认"）
+- ❌ **Roboto**（Android/Material 默认）
+- ❌ **Arial**（操作系统默认）
+- ❌ **Fraunces**（AI 出"优雅衬线"时的万能公式）
+- ❌ **system-ui / `-apple-system`**（除非做原型模拟 iOS/macOS 原生 UI）
+
+### 推荐字体（Google Fonts，按气质）
+
+| 用途 | 推荐 | Google Fonts 名 |
+|------|------|----------------|
+| 现代标题 | Plus Jakarta Sans | `Plus+Jakarta+Sans` |
+| 优雅正文 | Outfit | `Outfit` |
+| 技术气质 | Space Grotesk | `Space+Grotesk` |
+| 高端品牌 | Sora | `Sora` |
+| 编辑 / 刊物 | Newsreader | `Newsreader` |
+| 手写风格 | Caveat | `Caveat` |
+| 等宽 / 代码 | JetBrains Mono | `JetBrains+Mono` |
+
+### oklch 色彩系统模板（零 context 起点）
+
+比 hex + 随手 lighten/darken 好很多——感知均匀，同 L 值色块视觉重量一致：
+
+```css
+:root {
+  --primary-h: 250;  /* 改这一个值换整个色系 */
+  --primary:       oklch(0.55 0.25 var(--primary-h));
+  --primary-light: oklch(0.75 0.15 var(--primary-h));
+  --primary-dark:  oklch(0.35 0.20 var(--primary-h));
+
+  --gray-50:  oklch(0.98 0.002 250);
+  --gray-100: oklch(0.96 0.004 250);
+  --gray-200: oklch(0.92 0.006 250);
+  --gray-300: oklch(0.87 0.008 250);
+  --gray-400: oklch(0.71 0.010 250);
+  --gray-500: oklch(0.55 0.014 250);
+  --gray-600: oklch(0.45 0.014 250);
+  --gray-700: oklch(0.37 0.014 250);
+  --gray-800: oklch(0.27 0.014 250);
+  --gray-900: oklch(0.21 0.014 250);
+}
+```
+
+### 6 组经验证的「色 × 字」配对
+
+用于快速起一个不像 AI 默认的视觉系统。选 1 组开工，用户若提供品牌再整组替换：
+
+| 风格 | 主色 (oklch) | 字体配对 | 适合场景 |
+|------|-------------|---------|---------|
+| 现代科技 | `oklch(0.55 0.25 250)` 蓝紫 | Space Grotesk + Outfit | SaaS、开发者工具、AI 产品 |
+| 优雅编辑 | `oklch(0.35 0.10 30)` 暖棕 | Newsreader + Outfit | 内容平台、博客、刊物 |
+| 高端品牌 | `oklch(0.20 0.02 250)` 近黑 | Sora + Plus Jakarta Sans | 奢侈品、咨询、金融 |
+| 活力消费 | `oklch(0.70 0.20 30)` 珊瑚 | Plus Jakarta Sans + Outfit | 电商、生活方式、社交 |
+| 简约专业 | `oklch(0.50 0.15 200)` 青蓝 | Outfit + Space Grotesk | 数据产品、Dashboard、B2B |
+| 手作温暖 | `oklch(0.55 0.15 80)` 焦糖 | Caveat（装饰）+ Newsreader | 食品、教育、创意类 |
+
+**要避免的组合**（等同视觉 AI slop）：
+- ❌ Inter + Roboto + `#3b82f6` 蓝（巅峰 AI 美学）
+- ❌ Fraunces + 紫粉渐变（烂大街）
+- ❌ 超过 3 个字体家族（视觉混乱）
+
+---
+
 ## 设计方向顾问（Fallback 模式）
 
 **什么时候触发**：
